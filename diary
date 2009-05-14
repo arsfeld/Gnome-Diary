@@ -1,0 +1,20 @@
+#!/usr/bin/python
+import os
+import gconf
+
+from Model import Model
+from View import View
+
+gconf_client = gconf.client_get_default()
+
+DIARY_PATH = gconf_client.get_string("/apps/diary/path") or os.path.expanduser('~/.gnome2/Diary/')
+if not os.path.exists(DIARY_PATH):
+    os.makedirs(DIARY_PATH)
+
+if __name__ == "__main__":
+    view = View()
+    model = Model(DIARY_PATH)
+    
+    view.set_model(model)
+    
+    view.main()
